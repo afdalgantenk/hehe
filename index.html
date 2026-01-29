@@ -86,7 +86,6 @@
 #no {
   background: #eee;
   position: relative;
-  width: 100%;        /* 🔥 kunci lebar */
   max-width: 100%;
   transition: left 0.15s ease, top 0.15s ease;
 }
@@ -118,12 +117,17 @@
   const yesBtn = document.getElementById("yes");
 
   function moveNo() {
-    // saat kabur, jadikan absolute
+    // 🔒 kunci ukuran SEBELUM absolute
+    const rect = noBtn.getBoundingClientRect();
+    noBtn.style.width = rect.width + "px";
+    noBtn.style.height = rect.height + "px";
+
+    // lalu kabur
     noBtn.style.position = "absolute";
 
     const padding = 20;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+    const maxX = window.innerWidth - rect.width - padding;
+    const maxY = window.innerHeight - rect.height - padding;
 
     const x = Math.random() * maxX + padding;
     const y = Math.random() * maxY + padding;
@@ -141,35 +145,20 @@
   // PC
   noBtn.addEventListener("mouseover", moveNo);
 
-  // YES button
+  // YES
   yesBtn.addEventListener("click", () => {
-    for (let i = 0; i < 14; i++) {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = "65%";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 1400);
-    }
-
-    setTimeout(() => {
-      document.body.innerHTML = `
-        <div style="
-          height:100vh;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          text-align:center;
-          padding:20px;
-          font-size:26px;
-          background:#ffe6ef;
-        ">
-          💕 I love you too 💕<br>
-          🥰🥰🥰
-        </div>
-      `;
-    }, 600);
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:28px;
+        background:#ffe6ef;
+      ">
+        💕 I love you too 💕
+      </div>
+    `;
   });
 </script>
 
