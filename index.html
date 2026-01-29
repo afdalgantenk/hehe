@@ -17,16 +17,29 @@
     overflow: hidden;
   }
 
+  /* CARD */
   .card {
     background: white;
     padding: 30px 25px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    animation: pop 0.8s ease;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
   }
 
   h1 {
     margin-bottom: 25px;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
   button {
@@ -35,6 +48,11 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  button:hover {
+    transform: scale(1.1);
   }
 
   #yes {
@@ -45,6 +63,18 @@
   #no {
     position: absolute;
     background: #ddd;
+  }
+
+  /* HEART */
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: fly 1.2s ease forwards;
+  }
+
+  @keyframes fly {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(1.5); opacity: 0; }
   }
 </style>
 </head>
@@ -61,39 +91,46 @@
   const noBtn = document.getElementById("no");
 
   function moveButton() {
-    const maxX = window.innerWidth - noBtn.offsetWidth;
-    const maxY = window.innerHeight - noBtn.offsetHeight;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
 
-  // PC (mouse)
+  // PC
   noBtn.addEventListener("mouseover", moveButton);
 
-  // HP (sentuhan)
+  // HP
   noBtn.addEventListener("touchstart", (e) => {
     e.preventDefault();
     moveButton();
   });
 
   document.getElementById("yes").onclick = () => {
-    document.body.innerHTML = `
-      <div style="
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-size:28px;
-        font-family:Arial;
-        background:#ffdde1;
-      ">
-        💕 I love you too 💕
-      </div>
-    `;
+    for (let i = 0; i < 12; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = "60%";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1200);
+    }
+
+    setTimeout(() => {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          font-size:30px;
+          background:#ffe6ec;
+        ">
+          💕 I love you too 💕
+        </div>
+      `;
+    }, 600);
   };
 </script>
 
