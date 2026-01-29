@@ -2,211 +2,198 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Do You Love Me?</title>
 
 <style>
- /* animasi tombol yes ditekan */
-#yes.clicked {
-  animation: press 0.25s ease;
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes press {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
+body {
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(160deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
+  overflow: hidden;
 }
 
-/* animasi card menghilang */
+/* ================= CARD ================= */
+.card {
+  width: 90%;
+  max-width: 360px;
+  background: white;
+  padding: 28px 20px 32px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  animation: slideUp 0.7s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
 .card.fade-out {
   animation: zoomOut 0.6s ease forwards;
 }
 
 @keyframes zoomOut {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.3);
-    opacity: 0;
-  }
+  to { transform: scale(1.3); opacity: 0; }
 }
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
 
-  body {
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(160deg, #ff758c, #ff7eb3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
-    overflow: hidden;
-  }
+/* ================= TEXT ================= */
+h1 {
+  font-size: 22px;
+  margin-bottom: 28px;
+  animation: float 2.2s ease-in-out infinite;
+}
 
-  .card {
-    width: 90%;
-    max-width: 360px;
-    background: white;
-    padding: 28px 20px 32px;
-    border-radius: 24px;
-    text-align: center;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-    animation: slideUp 0.7s ease;
-  }
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
 
-  @keyframes slideUp {
-    from {
-      transform: translateY(60px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  h1 {
-    font-size: 22px;
-    margin-bottom: 28px;
-    animation: float 2.2s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-
+/* ================= BUTTONS ================= */
 .btn-group {
   display: flex;
   gap: 14px;
 }
 
-.btn-group button {
+button {
   width: 100%;
+  height: 52px;
+  padding: 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-  button {
-    padding: 16px 0;
-    font-size: 16px;
-    border: none;
-    border-radius: 14px;
-    font-weight: 600;
-    cursor: pointer;
-   height: 52px;
-  }
+/* YES */
+#yes {
+  background: #ff4d6d;
+  color: white;
+  box-shadow: 0 8px 20px rgba(255,77,109,0.4);
+}
 
-  #yes {
-    background: #ff4d6d;
-    color: white;
-   position: relative;
-    box-shadow: 0 8px 20px rgba(255,77,109,0.4);
-   width: 100%;
-    transition: transform 0.15s ease;
-  }
+#yes:active {
+  transform: scale(0.95);
+}
 
-  #yes:active {
-    transform: scale(0.95);
-  }
+#yes.clicked {
+  animation: press 0.25s ease;
+}
 
+@keyframes press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* NO */
 #no {
   background: #eee;
   position: relative;
-  max-width: 100%;
   transition: left 0.15s ease, top 0.15s ease;
 }
 
-  .heart {
-    position: absolute;
-    font-size: 26px;
-    animation: fly 1.4s ease forwards;
-  }
+/* ================= HEART ================= */
+.heart {
+  position: absolute;
+  font-size: 26px;
+  animation: fly 1.4s ease forwards;
+}
 
-  @keyframes fly {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-140px) scale(1.6); opacity: 0; }
-  }
+@keyframes fly {
+  to { transform: translateY(-140px) scale(1.6); opacity: 0; }
+}
 </style>
 </head>
+
 <body>
 
 <div class="card">
   <h1>Do you love me? 💖</h1>
 
-<div class="btn-group">
-  <button id="yes">Yes</button>
-  <button id="no">No</button>
+  <div class="btn-group">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
 </div>
 
 <script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const card = document.querySelector(".card");
+const noBtn  = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card   = document.querySelector(".card");
 
-  function moveNo() {
-    const rect = noBtn.getBoundingClientRect();
-    noBtn.style.width = rect.width + "px";
-    noBtn.style.height = rect.height + "px";
-    document.body.appendChild(noBtn);
-    noBtn.style.position = "absolute";
+/* ===== NO KABUR ===== */
+function moveNo() {
+  const rect = noBtn.getBoundingClientRect();
 
-    const padding = 20;
-    const maxX = window.innerWidth - rect.width - padding;
-    const maxY = window.innerHeight - rect.height - padding;
+  // kunci ukuran
+  noBtn.style.width  = rect.width + "px";
+  noBtn.style.height = rect.height + "px";
 
-    noBtn.style.left = Math.random() * maxX + "px";
-    noBtn.style.top = Math.random() * maxY + "px";
+  // pindahkan ke body
+  document.body.appendChild(noBtn);
+  noBtn.style.position = "absolute";
+
+  const padding = 20;
+  const maxX = window.innerWidth  - rect.width  - padding;
+  const maxY = window.innerHeight - rect.height - padding;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top  = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", e => {
+  e.preventDefault();
+  moveNo();
+});
+
+/* ===== YES CLICK ===== */
+yesBtn.addEventListener("click", () => {
+  yesBtn.classList.add("clicked");
+
+  // hujan love
+  for (let i = 0; i < 16; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top  = "65%";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1400);
   }
 
-  noBtn.addEventListener("mouseover", moveNo);
-  noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveNo();
-  });
+  setTimeout(() => card.classList.add("fade-out"), 200);
 
-  yesBtn.addEventListener("click", () => {
-    // animasi tombol
-    yesBtn.classList.add("clicked");
-
-    // hujan love
-    for (let i = 0; i < 16; i++) {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = "65%";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 1400);
-    }
-
-    // animasi card
-    setTimeout(() => {
-      card.classList.add("fade-out");
-    }, 200);
-
-    // layar akhir
-    setTimeout(() => {
-      document.body.innerHTML = `
-        <div style="
-          height:100vh;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          text-align:center;
-          font-size:28px;
-          background:#ffe6ef;
-          animation: fadeIn 0.6s ease;
-        ">
-          💕 I love you too 💕<br>
-          🥰🥰🥰
-        </div>
-      `;
-    }, 800);
-  });
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        font-size:28px;
+        background:#ffe6ef;
+        animation: fadeIn 0.6s ease;
+      ">
+        💕 I love you too 💕<br>🥰🥰🥰
+      </div>
+    `;
+  }, 800);
+});
 </script>
 
 </body>
