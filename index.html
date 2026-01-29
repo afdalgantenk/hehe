@@ -69,6 +69,7 @@
     border-radius: 14px;
     font-weight: 600;
     cursor: pointer;
+   height: 52px;
   }
 
   #yes {
@@ -84,7 +85,10 @@
 
 #no {
   background: #eee;
-  position: relative; /* awalnya ikut layout */
+  position: relative;
+  width: 100%;        /* 🔥 kunci lebar */
+  max-width: 100%;
+  transition: left 0.15s ease, top 0.15s ease;
 }
 
   .heart {
