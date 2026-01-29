@@ -117,12 +117,17 @@
   const yesBtn = document.getElementById("yes");
 
   function moveNo() {
-    // 🔒 kunci ukuran SEBELUM absolute
+    // ambil ukuran & posisi awal
     const rect = noBtn.getBoundingClientRect();
+
+    // kunci ukuran
     noBtn.style.width = rect.width + "px";
     noBtn.style.height = rect.height + "px";
 
-    // lalu kabur
+    // PINDAHKAN ke body (ini kuncinya 🔥)
+    document.body.appendChild(noBtn);
+
+    // jadikan absolute
     noBtn.style.position = "absolute";
 
     const padding = 20;
