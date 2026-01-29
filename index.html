@@ -111,8 +111,12 @@
 
 <script>
   const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
 
   function moveNo() {
+    // saat kabur, jadikan absolute
+    noBtn.style.position = "absolute";
+
     const padding = 20;
     const maxX = window.innerWidth - noBtn.offsetWidth - padding;
     const maxY = window.innerHeight - noBtn.offsetHeight - padding;
@@ -124,16 +128,17 @@
     noBtn.style.top = y + "px";
   }
 
-  // MOBILE (sentuh)
+  // HP
   noBtn.addEventListener("touchstart", (e) => {
     e.preventDefault();
     moveNo();
   });
 
-  // DESKTOP (mouse)
+  // PC
   noBtn.addEventListener("mouseover", moveNo);
 
-  document.getElementById("yes").onclick = () => {
+  // YES button
+  yesBtn.addEventListener("click", () => {
     for (let i = 0; i < 14; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -161,33 +166,7 @@
         </div>
       `;
     }, 600);
-  };
-
-  // posisi awal tombol NO
-  const noBtn = document.getElementById("no");
-
-  function moveNo() {
-    noBtn.style.position = "absolute";
-
-    const padding = 20;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
-    const x = Math.random() * maxX + padding;
-    const y = Math.random() * maxY + padding;
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  }
-
-  // HP
-  noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveNo();
   });
-
-  // PC
-  noBtn.addEventListener("mouseover", moveNo);
 </script>
 
 </body>
