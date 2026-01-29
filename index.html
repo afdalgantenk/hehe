@@ -82,10 +82,10 @@
     transform: scale(0.95);
   }
 
-  #no {
-    position: absolute;
-    background: #eee;
-  }
+#no {
+  background: #eee;
+  position: relative; /* awalnya ikut layout */
+}
 
   .heart {
     position: absolute;
@@ -104,12 +104,10 @@
 <div class="card">
   <h1>Do you love me? 💖</h1>
 
-  <div class="btn-group">
-    <button id="yes">Yes</button>
-  </div>
+<div class="btn-group">
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
 </div>
-
-<button id="no">No</button>
 
 <script>
   const noBtn = document.getElementById("no");
@@ -166,7 +164,30 @@
   };
 
   // posisi awal tombol NO
-  moveNo();
+  const noBtn = document.getElementById("no");
+
+  function moveNo() {
+    noBtn.style.position = "absolute";
+
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const x = Math.random() * maxX + padding;
+    const y = Math.random() * maxY + padding;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  // HP
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveNo();
+  });
+
+  // PC
+  noBtn.addEventListener("mouseover", moveNo);
 </script>
 
 </body>
