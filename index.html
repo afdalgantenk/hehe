@@ -63,7 +63,7 @@ h1 {
 /* ================= BUTTONS ================= */
 .btn-group {
   display: flex;
-  flex-direction: column; /* 🔥 vertikal */
+  flex-direction: column;
   gap: 14px;
 }
 
@@ -115,6 +115,65 @@ button {
 @keyframes fly {
   to { transform: translateY(-140px) scale(1.6); opacity: 0; }
 }
+
+/* ================= FINAL SCREEN ================= */
+.final {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(270deg, #ff9a9e, #fad0c4, #ff9a9e);
+  background-size: 600% 600%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: bgMove 6s ease infinite;
+  overflow: hidden;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.final-text {
+  font-size: 34px;
+  font-weight: 700;
+  color: #ff3366;
+  text-align: center;
+  animation: pulse 1.5s infinite;
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* love jatuh */
+.drop {
+  position: absolute;
+  top: -40px;
+  font-size: 28px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* CREDIT */
+.credit {
+  position: absolute;
+  bottom: 14px;
+  font-size: 13px;
+  color: rgba(255, 51, 102, 0.7);
+  letter-spacing: 0.5px;
+}
 </style>
 </head>
 
@@ -138,11 +197,9 @@ const card   = document.querySelector(".card");
 function moveNo() {
   const rect = noBtn.getBoundingClientRect();
 
-  // kunci ukuran
   noBtn.style.width  = rect.width + "px";
   noBtn.style.height = rect.height + "px";
 
-  // pindahkan ke body
   document.body.appendChild(noBtn);
   noBtn.style.position = "absolute";
 
@@ -164,7 +221,7 @@ noBtn.addEventListener("touchstart", e => {
 yesBtn.addEventListener("click", () => {
   yesBtn.classList.add("clicked");
 
-  // hujan love
+  // hujan love awal
   for (let i = 0; i < 16; i++) {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -179,19 +236,27 @@ yesBtn.addEventListener("click", () => {
 
   setTimeout(() => {
     document.body.innerHTML = `
-      <div style="
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        text-align:center;
-        font-size:28px;
-        background:#ffe6ef;
-        animation: fadeIn 0.6s ease;
-      ">
-        💕 I love you too 💕<br>🥰🥰🥰
+      <div class="final">
+        <div class="final-text">
+          ❤️ I love you too ❤️<br>
+          🥰🥰🥰
+        </div>
+        <div class="credit">
+          Created by Mafdal
+        </div>
       </div>
     `;
+
+    // hujan love terus-menerus
+    setInterval(() => {
+      const drop = document.createElement("div");
+      drop.className = "drop";
+      drop.textContent = "💖";
+      drop.style.left = Math.random() * 100 + "vw";
+      drop.style.animationDuration = (2 + Math.random() * 3) + "s";
+      document.body.appendChild(drop);
+      setTimeout(() => drop.remove(), 5000);
+    }, 300);
   }, 800);
 });
 </script>
